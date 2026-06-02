@@ -6,19 +6,17 @@ def load_data():
     DATABASE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQWy2nwM1aZeGPES1_KFE9iSCX4NpcRfTqDIqabFBntt9JVhS-KXGKs0nOqWT9NUQ/pub?gid=1739608219&single=true&output=csv"
     RESPONSE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZtxtbNloidO6exG1OjIWXXy0XOIPMlVCq-iCOOWPwlaqJAzxZjMFtE66hoCHAmUQysqZiRFXViLCZ/pub?gid=0&single=true&output=csv"
 
+    # Load both course database and response data
     course_database = pd.read_csv(DATABASE_SHEET_URL)
     response_data = pd.read_csv(RESPONSE_SHEET_URL)
 
-    # Bersihkan nama kolom
-    course_database.columns = course_database.columns.str.strip()
-    response_data.columns = response_data.columns.str.strip()
+    # Clean up data (strip and lowercase for consistency)
+    course_database['Matakuliah'] = course_database['Matakuliah'].str.strip().str.upper()
+    response_data['Nama mata kuliah yang diampu sesuai nama dosen yang dipilih sebelumnya'] = response_data['Nama mata kuliah yang diampu sesuai nama dosen yang dipilih sebelumnya'].str.strip().str.upper()
 
-    # Tampilkan nama kolom untuk debugging
-    st.write("Matakuliah:")
-    st.write(list(course_database.columns))
-
-    st.write("Nama mata kuliah yang diampu sesuai nama dosen yang dipilih sebelumnya:")
-    st.write(list(response_data.columns))
+    # Ensure NIM columns are of the same type for comparison
+    course_database['NIM'] = course_database['NIM'].astype(str)
+    response_data['NIM'] = response_data['NIM'].astype(str)
 
     return course_database, response_data
 
