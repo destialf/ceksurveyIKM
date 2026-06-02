@@ -14,10 +14,10 @@ def load_data():
     response_data.columns = response_data.columns.str.strip()
 
     # Tampilkan nama kolom untuk debugging
-    st.write("Kolom database:")
+    st.write("Matakuliah:")
     st.write(list(course_database.columns))
 
-    st.write("Kolom response:")
+    st.write("Nama mata kuliah yang diampu sesuai nama dosen yang dipilih sebelumnya:")
     st.write(list(response_data.columns))
 
     return course_database, response_data
